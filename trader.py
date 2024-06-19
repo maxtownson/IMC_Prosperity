@@ -504,7 +504,7 @@ class Trader:
                 - The number of conversions performed.
                 - Additional trader data as a string.
         """
-        orders_by_symbol = {}
+        results = {}
         conversions = 0
         trader_data = ""
 
@@ -512,19 +512,15 @@ class Trader:
         starfruit_orders = self.generate_starfruit_orders(state)
         amethyst_orders = self.generate_amethyst_orders(state)
         orchid_orders, conversions = self.generate_orchid_orders(state)
-
-        # Store orders in the result dictionary
-        orders_by_symbol[STARFRUIT] = starfruit_orders
-        orders_by_symbol[AMETHYST] = amethyst_orders
-        orders_by_symbol[ORCHIDS] = orchid_orders
-
-        # Generate and store orders for round 3 trades
         strawberry_orders, gift_basket_orders = self.round_3_trades(state)
-        orders_by_symbol[STRAWBERRIES] = strawberry_orders
-        orders_by_symbol[GIFT_BASKET] = gift_basket_orders
-
-        # Generate and store orders for coconuts and coconut coupons
         coconut_coupon_orders = self.generate_coconut_and_coupon_orders(state)
-        orders_by_symbol[COCONUT_COUPON] = coconut_coupon_orders
 
-        return orders_by_symbol, conversions, trader_data
+        # Store orders for each symbol in the result dictionary
+        results[STARFRUIT] = starfruit_orders
+        results[AMETHYST] = amethyst_orders
+        results[ORCHIDS] = orchid_orders
+        results[STRAWBERRIES] = strawberry_orders
+        results[GIFT_BASKET] = gift_basket_orders
+        results[COCONUT_COUPON] = coconut_coupon_orders
+
+        return results, conversions, trader_data
